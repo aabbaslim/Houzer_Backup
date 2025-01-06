@@ -1,0 +1,47 @@
+{{#partial "full-width"}}
+    <div class="cat-top-main-banner primary-bgwhite">
+
+        <div class="category-top-banner mb-45">
+            <div class="breadcrumb-row">
+                <div class="container-lg">
+                {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+                </div>
+            </div>
+        </div>
+  </div>
+{{/partial}}
+{{#partial "page"}}
+
+{{> components/blog/posting post=blog.post show_tags=true}}
+
+{{/partial}}
+{{> layout/base}}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{blog.post.url}}"
+  },
+  "headline": "{{blog.post.title}}",
+  "image": "{{getImage blog.post.thumbnail theme_settings.blog_size }}",
+  "datePublished": "{{blog.post.date_published}}",
+  "dateModified": "{{blog.post.date_published}}",
+  "author": {
+    "@type": "Person",
+    "name": "{{#if blog.post.author}}{{blog.post.author}}{{else}}{{settings.store_name}}{{/if}}",
+    "url": "{{blog.post.url}}"
+  },
+   "publisher": {
+    "@type": "Organization",
+    "name": "{{settings.store_name}}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{getImage settings.store_logo.image 'logo_size'}}"
+    }
+  },
+  "description": "{{ sanitize blog.post.body }}"
+}
+</script>

@@ -1,0 +1,42 @@
+<div class="recent-blog-post">
+  <div class="container">
+    <div class="blog-list-section">
+      {{!--<div class="blog-list-title">
+        {{#if theme_settings.Blog_section_title}}
+          <h2 class="page-heading">{{theme_settings.Blog_section_title}}</h2>
+        {{/if}}
+        <a href="/blog/">view all</a>
+      </div>--}}
+      <div class="custom-row">         
+        <div class="oc-blog-left">
+          {{assignVar 'loopIndex1' 0}}
+          {{#each blog.recent_posts}}
+            {{#contains (JSONstringify (pluck tags 'name')) 'Press Release'}}
+            {{else}}
+              {{#if (getVar 'loopIndex1') '<' 1}}
+                <div class="grid bigblogimg">
+                  {{> components/blog/oc-custom-blog-post blog=blog.recent_posts columns=3 settings=../settings}}
+                </div>
+              {{/if}}
+              {{assignVar 'loopIndex1' (sum (getVar 'loopIndex1') 1)}}
+            {{/contains}}
+          {{/each}}
+        </div>
+        <div class="oc-blog-right">
+          {{assignVar 'loopIndex2' 0}}
+          {{#each blog.recent_posts}}
+            {{#contains (JSONstringify (pluck tags 'name')) 'Press Release'}}
+            {{else}}
+              {{#and (if (getVar 'loopIndex2') '>=' 1) (if (getVar 'loopIndex2') '<' 4)}}
+                <div class="grid">
+                  {{> components/blog/oc-custom-blog-post blog=blog.recent_posts columns=3 settings=../settings}}
+                </div>
+              {{/and}}
+              {{assignVar 'loopIndex2' (sum (getVar 'loopIndex2') 1)}}
+            {{/contains}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

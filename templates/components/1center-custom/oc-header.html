@@ -1,0 +1,164 @@
+<a href="#main-content" class="skip-to-main-link">{{lang 'header.skip_to_main'}}</a>
+
+{{#if theme_settings.header_style '==' 'header1'}}
+
+<header class="header {{#unless theme_settings.sticky-header}} sticky-header {{/unless}}" sticky="{{theme_settings.sticky-header}}" role="banner">
+    
+    <div class="header-main">
+        <div class="pre-header">
+            <div class="container-lg">
+                <a class="pre-header__phone" href="tel:+1-{{settings.phone_number}}">{{settings.phone_number}}</a>
+                <p class="pre-header__text pre-header__text--desktop"><span>Experts available Mon - Friday at 8 AM EST</span><span> | </span><span><a style="color: #fff" href="/pro-pricing/">GET PRO PRICING</a></span></p>
+                <p class="pre-header__text pre-header__text--mobile"><span>Free Shipping On Orders Over $50</span></p>
+            </div>
+        </div>
+        <div class="container-lg">
+            <div class="custom-row flex">
+                <div class="grid mobilemenu-icon">
+                    <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+                        <span class="mobileMenu-toggleIcon">Toggle menu</span>
+                    </a>
+                </div>
+                <div class="grid">
+                    {{#if page_type '===' 'default'}}
+                        <div class="header-logo header-logo--{{theme_settings.logo-position}}">
+                            {{> components/common/store-logo}}
+                        </div>
+                    {{else}}
+                        <div class="header-logo header-logo--{{theme_settings.logo-position}}">
+                            {{> components/common/store-logo}}
+                        </div>
+                    {{/if}}
+                </div>
+                <div class="grid desktop-search">
+                    <div class="desktop-search-form-wrapper">
+                        <form class="form" id="headerQuickSearchForm" onsubmit="return false" data-url="{{urls.search}}" data-quick-search-form>
+                            <fieldset class="form-fieldset">
+                                <div class="form-field">
+                                    <label class="is-srOnly" for="{{name}}">{{lang "search.quick_search.input_label"}}</label>
+                                    <input class="form-input"
+                                        data-search-quick
+                                        name="{{name}}"
+                                        id="{{name}}"
+                                        data-error-message="{{lang 'search.error.empty_field'}}"
+                                        placeholder="{{lang 'search.quick_search.input_placeholder'}}"
+                                        autocomplete="off"
+                                    >
+                                    <!-- <div class="search-cancle">
+                                        <div class="close-search">Cancel</div>
+                                    </div>   -->
+                                    <button class="search-btn" type="submit" name="button" onclick="document.getElementById('headerQuickSearchForm').submit();">
+                                        <svg><use xlink:href="#icon-header-search"></use></svg>
+                                        Search
+                                    </button>        
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div class="searchloader" style="display: none;">
+                            <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}">
+                        </div>
+                    </div>
+                    <p role="status"
+                    aria-live="polite"
+                    class="aria-description--hidden"
+                    data-search-aria-message-predefined-text="{{{lang 'search.results.quick_count_live'}}}"
+                    ></p>
+                    <section class="quickSearchResults" data-bind="html: results"></section>  
+                </div>
+                <div class="grid free-shipping-msg">
+                    <div>
+                        <span>Free Shipping</span>
+                        <span>On Orders Over $50</span>
+                    </div>
+                </div>
+                <div class="navPages-container grid nav-mobile-only" id="menu" data-menu>
+                    {{> components/1center-custom/oc-navigation-menu navigation-link=./theme_settings.category-menu-name}}     
+                </div>
+                <div class="grid">
+                    {{> components/1center-custom/oc-navigation}}                
+                </div>
+            </div>
+        </div>
+        <div class="sub-nav-bar nav-desktop-only">
+            <div class="container-lg">
+                <div class="navPages-container grid" id="menu" data-menu>
+                    {{> components/1center-custom/oc-navigation-menu navigation-link=./theme_settings.category-menu-name}}     
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    {{> components/1center-custom/oc-navigation-mobile}}   
+
+{{/if}}
+
+{{#if theme_settings.header_style '==' 'header2'}}
+
+<header class="header {{#unless theme_settings.sticky-header}} sticky-header {{/unless}} {{#if theme_settings.header_style '==' 'header2'}}headerstyletwo{{/if}}" sticky="{{theme_settings.sticky-header}}" role="banner">
+    <div class="pencilbar">
+        <div class="container-lg">
+            <div class="custom-row flex">
+                {{#if theme_settings.shippingtext}}
+                    <div class="grid">
+                        <p class="shipping-text">{{theme_settings.shippingtext}}</p>
+                    </div>
+                {{/if}}
+                {{#or customer (unless theme_settings.restrict_to_login)}}
+                    <div class="grid">
+                        {{> components/common/currency-selector}}
+                    </div>
+                {{/or}}
+            </div>
+        </div>
+        
+    </div>
+    <div class="header-main">
+        
+        <div class="container-lg">
+            <div class="custom-row flex">
+                <div class="grid mobilemenu-icon">
+                    <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+                        <span class="mobileMenu-toggleIcon">Toggle menu</span>
+                    </a>
+                </div>
+               
+                <div class="grid flex flex-center">
+                    <div class="desktopmenu-icon">
+                        <a href="javascript:void(0);" class="desktopMenu-toggle" >
+                            <span class="mobileMenu-toggleIcon">Toggle menu</span>
+                        </a>
+                    </div>
+                    {{#if page_type '===' 'default'}}
+                        <div class="header-logo header-logo--{{theme_settings.logo-position}} {{#if theme_settings.layout '==' 'jewelry'}} jewelry-variant-logo {{/if}}">
+                            {{> components/common/store-logo}}
+                        </div>
+                    {{else}}
+                        <div class="header-logo header-logo--{{theme_settings.logo-position}} {{#if theme_settings.layout '==' 'jewelry'}} jewelry-variant-logo {{/if}}">
+                            {{> components/common/store-logo}}
+                        </div>
+                    {{/if}}
+                </div>
+                <div class="navPages-container grid" id="menu" data-menu>
+                    {{> components/1center-custom/oc-navigation-menu navigation-link=./theme_settings.category-menu-name}}
+                    
+                </div>
+                <div class="grid">
+                    {{> components/1center-custom/oc-navigation}}                
+                </div>
+                <div id="headerSidebar" class="header-side-bar custom-scroll"> 
+                    {{> components/1center-custom/oc-header-sidebar}}
+                    
+                </div>
+                <div class="headersidebar-overlay"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    {{> components/1center-custom/oc-navigation-mobile}}   
+
+{{/if}}
+
+{{{region name="header_bottom--global"}}}
+{{{region name="header_bottom"}}}

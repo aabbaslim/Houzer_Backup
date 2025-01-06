@@ -1,0 +1,244 @@
+<div class="oc-description-tabs">
+    
+    {{assignVar 'checkPrdFeatures' '0'}}
+	{{assignVar 'checkPrdSpec' '0'}}
+	{{assignVar 'checkPrdDl' '0'}}
+	
+	{{#each product.custom_fields}}
+		{{#startsWith "_feat_" name}}
+			{{assignVar 'checkPrdFeatures' '1'}}
+		{{/startsWith}}
+	{{/each}}
+
+	{{#each product.custom_fields}}
+		{{#startsWith "_spec_" name}}
+			{{assignVar 'checkPrdSpec' '1'}}
+		{{/startsWith}}
+	{{/each}}
+	
+	{{#each product.custom_fields}}
+		{{#startsWith "_dl_" name}}
+			{{assignVar 'checkPrdDl' '1'}}
+		{{/startsWith}}
+	{{/each}}
+	
+	{{#if (getVar 'checkPrdFeatures') '==' '1'}}
+		<div class="oc-description-tabrow">
+			<div class="tab">
+				<h2 class="tab-title">FEATURES & BENEFITS</h2>
+				<div class="icon">
+					<svg>
+						<use xlink:href="#icon-pdp-tab-arrow" />
+					</svg>
+				</div>
+			</div>
+			<div class="tab-content oc-productView-description" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+			    <ul>
+				    {{#each product.custom_fields}}
+					    {{#startsWith "_feat_" name}}
+						    <li>{{{value}}}</li>
+					    {{/startsWith}}
+				    {{/each}}
+				</ul>
+			</div>
+		</div>
+	{{/if}}
+	
+    {{#if product.description}}
+        {{#contains product.description '<p><!-- pagebreak --></p>'}}
+            {{#eachIndex (split product.description '<p><!-- pagebreak --></p>')}}
+                {{assignVar 'checktabTitle' '0'}}
+                
+                {{#each (split item '</h4>')}}
+                    {{#if @key '==' '0'}}
+                        {{#or (if (getVar 'checkPrdFeatures') '==' '1') (if (getVar 'checkPrdSpec') '==' '1') (if (getVar 'checkPrdDl') '==' '1')}}
+                            {{assignVar 'checktabTitle' (dashcase (lowercase (sanitize this)))}}
+                        {{/or}}
+                    {{/if}}
+                {{/each}}
+                
+                <div class="oc-description-tabrow" {{#and (if (getVar 'checkPrdFeatures') '==' '1') (if (getVar 'checktabTitle') '==' 'features-amp-benefits')}}style="display: none;"{{/and}}{{#and (if (getVar 'checkPrdSpec') '==' '1') (if (getVar 'checktabTitle') '==' 'product-specifications')}}style="display: none;"{{/and}}{{#and (if (getVar 'checkPrdDl') '==' '1') (if (getVar 'checktabTitle') '==' 'product-downloads')}}style="display: none;"{{/and}}>
+                    <div class="tab">
+                        <h2 class="tab-title">
+                            {{#each (split item '</h4>')}}{{#if @key '==' '0'}}{{sanitize this}}{{/if}}{{/each}}</h2>
+                        <div class="icon">
+                            <svg>
+                                <use xlink:href="#icon-pdp-tab-arrow" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="tab-content oc-productView-description" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+                        {{#each (split item '</h4>')}}{{#if @key '==' '1'}}{{{this}}}{{/if}}{{/each}}
+                    </div>
+                </div>
+            {{/eachIndex}}
+        {{else}}
+            <div class="oc-description-tabrow">
+                <div class="tab">
+                    <h2 class="tab-title">Product Description</h2>
+                    <div class="icon">
+                        <svg>
+                            <use xlink:href="#icon-pdp-tab-arrow" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="tab-content oc-productView-description">
+                    {{{product.description}}}
+                </div>
+            </div>
+        {{/contains}}
+    {{/if}}
+	
+	{{#if (getVar 'checkPrdSpec') '==' '1'}}
+		<div class="oc-description-tabrow">
+			<div class="tab">
+				<h2 class="tab-title">Product Specifications</h2>
+				<div class="icon">
+					<svg>
+						<use xlink:href="#icon-pdp-tab-arrow" />
+					</svg>
+				</div>
+			</div>
+			<div class="tab-content oc-productView-description" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+				<table class="shop_attributes" style="width: 510px;">
+					<tbody>
+						{{#each product.custom_fields}}
+							{{#startsWith "_spec_" name}}
+								<tr>
+									<th style="width: 169px;">
+										{{#each (split name '_')}}
+											{{#if @last}}
+												{{this}}
+											{{/if}}
+										{{/each}}
+									</th>
+									<td style="width: 341px;">{{{value}}}</td>
+								</tr>
+							{{/startsWith}}
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	{{/if}}
+	
+	{{#if (getVar 'checkPrdDl') '==' '1'}}
+		<div class="oc-description-tabrow">
+			<div class="tab">
+				<h2 class="tab-title">Product Downloads</h2>
+				<div class="icon">
+					<svg>
+						<use xlink:href="#icon-pdp-tab-arrow" />
+					</svg>
+				</div>
+			</div>
+			<div class="tab-content oc-productView-description" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+				<div>
+				    {{#each product.custom_fields}}
+					    {{#startsWith "_dl_" name}}
+						    <span style="padding-right:8px;"><a href="{{{value}}}" target="_blank">{{#each (split name '_')}}{{#if @last}}{{this}}{{/if}}{{/each}}</a></span>
+					    {{/startsWith}}
+				    {{/each}}
+				</div>
+			</div>
+		</div>
+	{{/if}}
+	
+	<div class="oc-description-tabrow" style="display:none;">
+		<div class="tab">
+			<h2 class="tab-title">Additional Information</h2>
+			<div class="icon">
+				<svg>
+					<use xlink:href="#icon-pdp-tab-arrow" />
+				</svg>
+			</div>
+		</div>
+		<div class="tab-content oc-productView-description" {{#if settings.data_tag_enabled}} data-event-type="product" {{/if}}>
+			<table class="shop_attributes" style="width: 510px;">
+				<tbody>
+					{{#each product.custom_fields}}
+						{{#startsWith "_" name}}
+							
+						{{else}}
+							<tr>
+								<th style="width: 169px;">
+									{{name}}
+								</th>
+								<td style="width: 341px;">{{{value}}}</td>
+							</tr>
+						{{/startsWith}}
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+    {{!-- {{#if theme_settings.show_custom_fields_tabs '!==' true}}
+        {{#if product.custom_fields}}
+            <div class="oc-description-tabrow">
+                <div class="tab">
+                    <h2 class="tab-title">Product Specifications</h2>
+                    <div class="icon">
+                        <svg>
+                            <use xlink:href="#icon-pdp-tab-arrow" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="tab-content oc-customfield">
+
+                    <div class="custom-row">
+                        {{> components/1center-custom/oc-custom-fields }}
+                    </div>
+
+                </div>
+            </div>
+        {{/if}}
+    {{/if}} --}}
+    
+    {{#if product.videos.list.length}}
+        <div class="oc-description-tabrow">
+            <div class="tab">
+                <h2 class="tab-title"> {{lang 'products.videos.header'}}</h2>
+                <div class="icon">
+                    <svg>
+                        <use xlink:href="#icon-pdp-tab-arrow" />
+                    </svg>
+                </div>
+            </div>
+            <div class="tab-content">
+                {{> components/1center-custom/oc-videos product.videos}}
+            </div>
+        </div>
+    {{/if}}
+    {{#if product.warranty}}
+        <div class="oc-description-tabrow">
+            <div class="tab">
+                <h2 class="tab-title">{{lang 'products.warranty'}}</h2>
+                <div class="icon">
+                    <svg>
+                        <use xlink:href="#icon-pdp-tab-arrow" />
+                    </svg>
+                </div>
+            </div>
+            <div class="tab-content">
+                {{{product.warranty}}}
+            </div>
+        </div>
+    {{/if}}
+</div>
+
+{{#all settings.show_product_reviews theme_settings.show_product_reviews product.reviews.total}}
+    <div class="oc-product-review" id="reviewSection">
+        {{!-- <div class="tab">
+                <h2 class="tab-title">{{lang 'products.reviews.header' total=product.reviews.total}}</h2>
+                <div class="icon">
+                    <svg>
+                        <use xlink:href="#icon-pdp-tab-arrow" />
+                    </svg>
+                </div>
+            </div>--}}
+        <div class="tab-content">
+            {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+        </div>
+    </div>
+{{/all}}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ locale_name }}">
+    <head>
+
+        <title>{{ head.title }}</title>
+
+        {{{ resourceHints }}}
+        {{{ head.meta_tags }}}
+        {{{ head.config }}}
+        {{#block "head"}} {{/block}}
+
+        <link href="{{ head.favicon }}" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="msvalidate.01" content="24F3A92507D2D486BA2FF6FDCB65601B" />
+        <script>
+            {{!-- Change document class from no-js to js so we can detect this in css --}}
+            document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+        </script>
+
+        {{> components/common/polyfill-script }}
+        <script>window.consentManagerTranslations = `{{{langJson 'consent_manager'}}}`;</script>
+
+        {{!-- Load Lazysizes script ASAP so images will appear --}}
+        <script>
+            {{!-- Only load visible elements until the onload event fires, after which preload nearby elements. --}}
+            window.lazySizesConfig = window.lazySizesConfig || {};
+            window.lazySizesConfig.loadMode = 1;
+        </script>
+        <script async src="{{cdn 'assets/dist/theme-bundle.head_async.js' resourceHint='preload' as='script'}}"></script>
+        
+        
+        {{getFontsCollection font-display='block'}}
+        
+        <link rel="preload" href="{{cdn 'assets/dist/theme-bundle.font.js'}}" as="script">
+        <script async src="{{cdn 'assets/dist/theme-bundle.font.js' resourceHint='preload' as='script'}}"></script>
+		
+		{{#if page_type '===' 'page'}}
+        <link rel="stylesheet" id="font-awesome-css"  href='https://use.fontawesome.com/releases/v5.5.0/css/all.css?ver=5.5.0' type="text/css" media="all">
+		{{/if}}
+
+        {{{stylesheet '/assets/css/theme.css'}}}
+        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+        {{{head.scripts}}}
+
+        {{~inject 'zoomSize' theme_settings.zoom_size}}
+        {{~inject 'productSize' theme_settings.product_size}}
+        {{~inject 'genericError' (lang 'common.generic_error')}}
+        {{~inject 'urls' urls}}
+        {{~inject 'secureBaseUrl' settings.secure_base_url}}
+        {{~inject 'cartId' cart_id}}
+        {{~inject 'template' template}}
+        {{~inject 'validationDictionaryJSON' (langJson 'validation_messages')}}
+        {{~inject 'validationFallbackDictionaryJSON' (langJson 'validation_fallback_messages')}}
+        {{~inject 'validationDefaultDictionaryJSON' (langJson 'validation_default_messages')}}
+        {{~inject 'carouselArrowAndDotAriaLabel' (lang 'carousel.arrow_and_dot_aria_label')}}
+        {{~inject 'carouselActiveDotAriaLabel' (lang 'carousel.active_dot_aria_label')}}
+        {{~inject 'carouselContentAnnounceMessage' (lang 'carousel.content_announce_message')}}
+        {{~inject 'stToken' settings.storefront_api.token}}
+
+        {{!-- Product Compare Settings --}}
+        {{~inject 'compareRequireMessage' (lang 'compare.no_remove')}}
+        {{~inject 'NoItemToCompare' (lang 'compare.no_item_compare')}}
+        {{~inject 'CompareSuccessMessage' (lang 'compare.item_successfully_added')}}
+        {{~inject 'CompareAlreadyAdded' (lang 'compare.item_already_added')}}
+        {{~inject 'CompareLimitMessage' (lang 'compare.more_than_4item')}}
+        {{~inject 'CompareNotFunction' (lang 'compare.not_functioning')}}
+        {{~inject 'CompareRemoveMessage' (lang 'compare.item_successfully_removed')}}
+        
+        {{!-- Product Card Custom Swatch Setting --}}
+        {{~inject 'CustomProductSwatch' theme_settings.custom-product-swatch}}
+
+        {{#if page_type '==' 'default'}}
+            <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "Houzer Inc",
+                    "url": "https://www.houzersink.com/",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "2605 Kuser Rd",
+                        "addressLocality": "Hamilton Township",
+                        "addressRegion": "NJ",
+                        "postalCode": "08691"
+                    },
+                    "description": "HOUZER is a well-known manufacturer & supplier of faucets as well as sinks made from fireclay, stainless steel, porcelain enameled steel, granite composite and hand hammered copper.",
+                    "logo": "https://cdn11.bigcommerce.com/s-ud2xpqoos0/images/stencil/132x22/logo-houzer_1674519100__59349.original.png",
+                    "sameAs": [
+                        "https://twitter.com/Houzersinks",
+                        "https://www.instagram.com/houzer_sink/",
+                        "https://www.pinterest.com/Houzersink/",
+                        "https://www.youtube.com/channel/UCEerr-LQK693vh7XFSP9f4w/"
+                    ],
+                    "contactPoint": [
+                        {
+                            "@type": "ContactPoint",
+                            "telephone": "+1-800-880-3639",
+                            "email": "sales@houzersink.com"
+                        }
+                    ]
+                }
+            </script>
+            <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "url": "https://www.houzersink.com/",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://www.houzersink.com/search.php?search_query={search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                }
+            </script>
+        {{/if}}
+
+        {{#if page_type '==' 'page'}}
+            {{#if page.title '==' 'About Houzer'}}
+                <script type="application/ld+json">
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        "name": "Houzer Inc",
+                        "url": "https://www.houzersink.com/",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "streetAddress": "2605 Kuser Rd",
+                            "addressLocality": "Hamilton Township",
+                            "addressRegion": "NJ",
+                            "postalCode": "08691"
+                        },
+                        "description": "HOUZER is a well-known manufacturer & supplier of faucets as well as sinks made from fireclay, stainless steel, porcelain enameled steel, granite composite and hand hammered copper.",
+                        "logo": "https://cdn11.bigcommerce.com/s-ud2xpqoos0/images/stencil/132x22/logo-houzer_1674519100__59349.original.png",
+                        "sameAs": [
+                            "https://twitter.com/Houzersinks",
+                            "https://www.instagram.com/houzer_sink/",
+                            "https://www.pinterest.com/Houzersink/",
+                            "https://www.youtube.com/channel/UCEerr-LQK693vh7XFSP9f4w/"
+                        ],
+                        "contactPoint": [
+                            {
+                                "@type": "ContactPoint",
+                                "telephone": "+1-800-880-3639",
+                                "email": "sales@houzersink.com"
+                            }
+                        ]
+                    }
+                </script>
+                <script type="application/ld+json">
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "url": "https://www.houzersink.com/",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://www.houzersink.com/search.php?search_query={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                    }
+                </script>
+            {{/if}}
+        {{/if}}
+        
+    </head>
+    <body class="type-{{page_type}} italiano-layout--{{theme_settings.layout}}">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNB7GBD"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        
+        <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
+
+        {{> components/1center-custom/oc-header }}
+        {{> components/common/body }}
+        {{> components/1center-custom/oc-footer }}
+
+        <script>window.__webpack_public_path__ = "{{cdn 'assets/dist/'}}";</script>
+        <script>
+            {{!-- Exported in app.js --}}
+            function onThemeBundleMain() {
+                window.stencilBootstrap("{{page_type}}", {{jsContext}}).load();
+            }
+        </script>
+       
+        <script async src="{{cdn 'assets/dist/theme-bundle.main.js' resourceHint='preload' as='script'}}" onload="onThemeBundleMain()"></script> 
+        {{{footer.scripts}}}
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".faqs h4").click(function(){
+                    $(this).toggleClass("active");
+                    $(this).next().slideToggle();
+                })
+                
+                // Reviews slider
+                $('.review-slider').slick({
+                  infinite: true,
+                  slidesToShow: 3,
+                  slidesToScroll: 1,
+                  arrows: false,
+                  dots:true,
+                  responsive: [
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                      }
+                    },
+                    {
+                      breakpoint: 480,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
+            })
+        </script>
+        
+        {{#if page_type '===' 'product'}}
+        <script>
+          gtag('event', 'view_item', {
+            'send_to': 'AW-938483160',
+            'value': '{{product.price.without_tax.value}}',
+            'items': [{
+              'id': '{{product.sku}}',
+              'google_business_vertical': 'retail'
+            }]
+          });
+        </script>
+        {{/if}}
+        <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
+    </body>
+</html>

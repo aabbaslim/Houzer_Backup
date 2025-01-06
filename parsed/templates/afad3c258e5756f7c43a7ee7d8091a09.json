@@ -1,0 +1,1 @@
+{"components/1center-custom/shop-by-cat-product-count":"{{#if category.products}}\r\n    {{category.total_products}}\r\n{{/if}}\r\n"}

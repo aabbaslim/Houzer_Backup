@@ -1,0 +1,11 @@
+
+{{#if product.related_products}}
+    
+<h2>{{lang 'products.related_products'}}</h2>
+
+    {{#if settings.data_tag_enabled}}
+        {{> components/1center-custom/oc-relatedcarousel products=product.related_products columns=4 list="Related Products" verticaltrue="true"}}
+    {{else}}
+        {{> components/1center-custom/oc-relatedcarousel products=product.related_products columns=4}}
+    {{/if}}
+{{/if}}
